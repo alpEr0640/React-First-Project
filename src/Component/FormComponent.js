@@ -29,7 +29,7 @@ export default function (props) {
   const [username, setusername] = useState("");
 
  const submit=()=>{
-   addUser(name, surname, username)
+   addUser(name, surname, username) 
    
   };
  console.log(typeof addUser)
