@@ -7,45 +7,40 @@ import {
   ModalFooter,
   Form,
   Label,
-  Input,FormGroup, Row, Col
+  Input,
+  FormGroup,
+  Row,
+  Col,
 } from "reactstrap";
 
 export default function (props) {
-  const { addUser } = props;
+  const { addUser, kullanicilar, setShowModal,showModal, setCloseModal } = props;
   const NewUser = {
     name: "",
     surname: "",
-    username: ""  
-  }
-  const [showModal, setShowModal] = useState(false);
-  const handleShowModal = () => {
-    setShowModal(true);
+    username: "",
   };
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-  const [name, setName] = useState('');
+
+  const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [username, setusername] = useState("");
 
- const submit=()=>{
-   addUser(name, surname, username) 
-   
+  const submit = () => {
+    addUser(name, surname, username);
+    setCloseModal();
   };
- console.log(typeof addUser)
 
   return (
     <div>
-      <button onClick={() => handleShowModal()} class="btn btn-primary mb-2">
-        add
-      </button>
+
+
       <div>
         <Modal
           isOpen={showModal}
           modalTransition={{ timeout: 400 }}
           backdropTransition={{ timeout: 100 }}
         >
-          <ModalHeader>Modal title</ModalHeader>
+          <ModalHeader>Tablo</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
@@ -89,10 +84,10 @@ export default function (props) {
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={() =>submit()}>
+            <Button color="primary" onClick={() => submit()}>
               Add
             </Button>{" "}
-            <Button color="secondary" onClick={() => handleCloseModal()}>
+            <Button color="secondary" onClick={() => setCloseModal()}>
               Cancel
             </Button>
           </ModalFooter>

@@ -12,25 +12,30 @@ export default function HomePage(props) {
  const addUser = (Name, Surname, Username) => {
     if ((Name, Surname, Username)) {
       const user = [kullanicilar]
-      kullanicilar.push({
-        id: uuidv4,
+      kullanicilar.push
+        ({
+        id: uuidv4(),
         Name: Name,
         Surname: Surname,
         Username:Username,
-
       })
-    }
+   }
+   else{
+      alert("boşlukları doldurunuz");
+   }
+   
   };
+  
   return (
-    <div class="mx-auto">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary ">
-        <div class="container">
-          <a class="navbar-brand ms-5" href="#">
+    <div className="mx-auto">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary ">
+        <div className="container">
+          <a className="navbar-brand ms-5" href="#">
             Navbar
           </a>
         </div>
       </nav>
-      <UserList kullanicilar={kullanicilar} addUser={addUser()} />
+      <UserList kullanicilar={kullanicilar} addUser={addUser} />
     </div>
   );
 }
