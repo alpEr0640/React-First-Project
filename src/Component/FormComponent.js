@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 
 export default function (props) {
-  const { addUser, kullanicilar, setShowModal,showModal, setCloseModal } = props;
+  const { addUser, showModal, setCloseModal } = props;
   const NewUser = {
     name: "",
     surname: "",
@@ -29,7 +29,6 @@ export default function (props) {
     addUser(name, surname, username);
     setCloseModal();
   };
-
   return (
     <div>
 
