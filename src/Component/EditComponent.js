@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import {
@@ -16,11 +16,43 @@ import {
 } from "reactstrap";
 
 export default function EditComponent(props) {
-
-  const { kullanicilar, editUser, states, hide, handleChange, updateUser } =
-    props;
-  //console.log("🚀 states:", states);
-  const [Val, setVal] = useState(states.user.Surname);
+  const {
+    kullanicilar,
+    editUser,
+    setUsers,
+    states,
+    hide,
+    handleChange,
+    updateUser,
+    user,
+  } = props;
+    console.log("🚀 ~ file: EditComponent.js:29 ~ EditComponent ~ states:", states)
+  const [id , setId] = useState(null)
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [username, setusername] = useState("");
+  const clear = () => {
+    setId();
+    setName("");
+    setSurname("");
+    setusername("");
+    
+  };
+  const cancel = () => {
+    clear();
+    hide();
+  }
+  const updated = () => {
+    updateUser(
+      states.user.id,
+      states.user.Name,
+      states.user.Surname,
+      states.user.Username,
+    );
+    
+    clear();
+    hide();
+  };
 
   return (
     <div>
@@ -78,10 +110,10 @@ export default function EditComponent(props) {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={()=> updateUser()}>
+          <Button color="success" onClick={() => updated()}>
             Update
           </Button>
-          <Button color="secondary" onClick={() => hide()}>
+          <Button color="secondary" onClick={() => cancel()}>
             Cancel
           </Button>
         </ModalFooter>

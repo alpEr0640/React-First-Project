@@ -14,25 +14,22 @@ import {
 } from "reactstrap";
 
 export default function (props) {
-  const { addUser, showModal, setCloseModal } = props;
-  const NewUser = {
-    name: "",
-    surname: "",
-    username: "",
-  };
-
+  const { addUser, showModal, setCloseModal,  } = props;
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [username, setusername] = useState("");
-
+  const clear = () => {
+    setName("");
+    setSurname("");
+    setusername("")
+  }
   const submit = () => {
     addUser(name, surname, username);
     setCloseModal();
+    clear();
   };
   return (
     <div>
-
-
       <div>
         <Modal
           isOpen={showModal}

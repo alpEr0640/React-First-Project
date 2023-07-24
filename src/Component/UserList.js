@@ -4,16 +4,15 @@ import EditComponent from "./EditComponent";
 import { Alert } from "bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from "react-toastify";
+import { clear } from "@testing-library/user-event/dist/clear";
 export default function UserList() {
   const [states, setStates] = useState({
     user: {},
     title: "",
     visible: false,
   });
-  const handleChange = (field, secondField, value) => {
-    console.log("🚀 ~ file: UserList.js:13 ~ handleChange ~ value:", value);
-    console.log("🚀 ~ file: UserList.js:13 ~ handleChange ~ field:", field);
 
+  const handleChange = (field, secondField, value) => {
     if (field === "user") {
       setStates({
         ...states,
@@ -22,6 +21,7 @@ export default function UserList() {
           [secondField]: value,
         },
       });
+      return;
     }
 
     setStates({
@@ -29,10 +29,10 @@ export default function UserList() {
       [field]: value,
     });
   };
-  const handleEditUser = (user) => {
+  const handleEditUser = (value) => {
     setStates({
-      user: user,
-      title: user.Name,
+      user: value,
+      title: value.Name,
       visible: true,
     });
   };
@@ -51,8 +51,8 @@ export default function UserList() {
   const [kullanicilar, setUsers] = useState([
     { id: uuidv4(), Name: "alper", Surname: "sonat", Username: "AlperSonat" },
     { id: uuidv4(), Name: "bugra", Surname: "sonat", Username: "BugraSonat" },
-    { id: uuidv4(), Name: "Furkan", Surname: "Ersoz", Username: "FurkanErsoz" },
     { id: uuidv4(), Name: "Emir", Surname: "Durmaz", Username: "EmirDurmaz" },
+    { id: uuidv4(), Name: "Furkan", Surname: "Ersoz", Username: "FurkanErsoz" },
   ]);
 
   const addUser = (Name, Surname, Username) => {
@@ -67,33 +67,35 @@ export default function UserList() {
       alert("boşlukları doldurunuz");
     }
   };
+
   const deleteUser = (id) => {
     const deneme = kullanicilar.filter((alper) => {
       return alper.id !== id;
     });
+    toast(`"${deneme.name}"kullanıcısı silindi`);
     setUsers(deneme);
-    toast(`"${id}"kullanıcısı silindi`);
   };
+
   const updateUser = (id, Name, Surname, Username) => {
-    if ((id, Name, Surname, Username)) {
-      const users = [...states];
-      let updatedUsers = kullanicilar.map((user) => {
-        if (user.id === id) {
-          user = {
-            id: id,
-            Name: Name,
-            Surname: Surname,
-            Username: Username
-          };
-        }
-        return user;
-      });
-      setStates({
-        kullanicilar: updatedUsers, 
-      })
-      }
-    }
     
+    if (id && Name && Surname && Username) {
+      console.log("fonksiyona girildi");
+      let deneme = kullanicilar.filter((i) => {
+        return i.id !== id;
+      });
+     
+      deneme.push({
+        id: id,
+        Name: Name,
+        Surname: Surname,
+        Username: Username,
+      });
+      console.log("🚀 ~ file: UserList.js:93 ~ updateUser ~ deneme:", deneme)
+      setUsers(deneme);
+      
+    }
+  };
+
   return (
     <div className="container mt-5">
       {kullanicilar.length > 0 ? (
@@ -147,12 +149,14 @@ export default function UserList() {
         add
       </button>
       <EditComponent
+        kullanicilar={kullanicilar}
         handleChange={handleChange}
         states={states}
         setStates={setStates}
         hide={hide}
+        setUsers={setUsers}
         updateUser={updateUser}
-        
+        user={states.user}
       />
       <FormComponent
         addUser={addUser}
